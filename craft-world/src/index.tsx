@@ -4,6 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import './index.css'; // Make sure to import the global CSS
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
