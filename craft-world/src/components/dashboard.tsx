@@ -2,6 +2,8 @@ import React from 'react';
 import { useGetMaterialsQuery, useGetSourcesQuery } from '../api/apiSlice';
 import { CircularProgress, Container, Grid, Typography } from '@mui/material';
 import { styled } from '@mui/system';
+import Inventory from './inventory';
+import Work from './work';
 
 const useGetData = () => {
   const {
@@ -50,10 +52,10 @@ function Dashboard() {
     <StyledContainer maxWidth={false}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <div>Left</div>
+          <Work sources={sourcesData} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <div>Right</div>
+          <Inventory />
         </Grid>
       </Grid>
     </StyledContainer>
