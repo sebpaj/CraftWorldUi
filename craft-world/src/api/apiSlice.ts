@@ -1,38 +1,27 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+import type { Location } from '../types/types';
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/graphql' }),
   endpoints: (builder) => ({
-    getMaterials: builder.query<string[], void>({
-      query: () => ({
-        url: '',
-        method: 'POST',
-        body: {
-          query: `
-            query {
-                materials
-            }`,
-        },
-      }),
-      transformResponse: (response: { data: { materials: string[] } }) =>
-        response.data.materials,
-    }),
-    getSources: builder.query<string[], void>({
+    getLocations: builder.query<Location[], void>({
       query: () => ({
         url: '',
         method: 'POST',
         body: {
           query: `
               query {
-                  sources
+                  locations{
+                    name
+                    material
+                  }
               }`,
         },
       }),
-      transformResponse: (response: { data: { sources: string[] } }) =>
-        response.data.sources,
+      transformResponse: (response: { data: { locations: Location[] } }) =>
+        response.data.locations,
     }),
   }),
 });
 
-export const { useGetMaterialsQuery, useGetSourcesQuery } = apiSlice;
+export const { useGetLocationsQuery } = apiSlice;

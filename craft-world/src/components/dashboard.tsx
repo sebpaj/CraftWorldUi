@@ -1,26 +1,14 @@
-import React from 'react';
-import { useGetMaterialsQuery, useGetSourcesQuery } from '../api/apiSlice';
+import React, { useState } from 'react';
+import { useGetLocationsQuery } from '../api/apiSlice';
 import { CircularProgress, Container, Grid, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import Inventory from './inventory';
 import Work from './work';
 
 const useGetData = () => {
-  const {
-    data: materialsData,
-    error: materialsError,
-    isLoading: isLoadingMaterials,
-  } = useGetMaterialsQuery();
-  const {
-    data: sourcesData,
-    error: sourcesError,
-    isLoading: isLoadingSources,
-  } = useGetSourcesQuery();
+  const { data: locationsData, error, isLoading } = useGetLocationsQuery();
 
-  const isLoading = isLoadingMaterials || isLoadingSources;
-  const error = materialsError || sourcesError;
-
-  return { materialsData, sourcesData, isLoading, error };
+  return { locationsData, error, isLoading };
 };
 
 const StyledContainer = styled(Container)(({ theme }) => ({
@@ -34,7 +22,8 @@ const StyledContainer = styled(Container)(({ theme }) => ({
 }));
 
 function Dashboard() {
-  const { materialsData, sourcesData, isLoading, error } = useGetData();
+  const [seconds, setSeconds] = useState(0);
+  const { locationsData, error, isLoading } = useGetData();
 
   if (isLoading) {
     return <CircularProgress />;
@@ -52,7 +41,11 @@ function Dashboard() {
     <StyledContainer maxWidth={false}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Work sources={sourcesData} />
+          <Work
+            seconds={seconds}
+            setSeconds={setSeconds}
+            locations={locationsData}
+          />
         </Grid>
         <Grid item xs={12} md={6}>
           <Inventory />
